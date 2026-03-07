@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khili Peinture – Artisan Peintre depuis 2011 – Draguignan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C0392B; --red-dark: #96281B; --red-light: #E74C3C;
+    --cream: #FAF7F2; --dark: #1A1A1A; --grey: #6B6B6B;
+    --light-grey: #F0EDE8; --white: #FFFFFF;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--dark); overflow-x:hidden; }
+
+  /* NAV */
+  nav { position:fixed; top:0; width:100%; z-index:200; background:rgba(26,26,26,0.97); display:flex; align-items:center; justify-content:space-between; padding:0 5%; height:70px; border-bottom:2px solid var(--red); }
+  .nav-logo { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:var(--white); letter-spacing:1px; }
+  .nav-logo span { color:var(--red-light); }
+  .nav-links { display:flex; gap:2.5rem; list-style:none; }
+  .nav-links a { color:rgba(255,255,255,0.8); text-decoration:none; font-size:0.85rem; font-weight:500; letter-spacing:1.5px; text-transform:uppercase; transition:color .2s; }
+  .nav-links a:hover { color:var(--red-light); }
+  .nav-cta { background:var(--red); color:white; border:none; padding:10px 22px; font-size:0.85rem; font-weight:500; letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:background .2s; }
+  .nav-cta:hover { background:var(--red-light); }
+
+  /* HERO */
+  .hero { min-height:100vh; background:var(--dark); position:relative; overflow:hidden; display:flex; align-items:center; padding-top:70px; }
+  .hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 70% 50%,rgba(192,57,43,.18) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 20% 80%,rgba(192,57,43,.08) 0%,transparent 60%); }
+  .hero-lines { position:absolute; inset:0; opacity:.04; background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,#fff 60px,#fff 61px); }
+  .hero-content { position:relative; z-index:2; padding:4rem 8%; max-width:760px; animation:fadeUp 1s ease both; }
+  .hero-badge { display:inline-block; border:1px solid var(--red); color:var(--red-light); font-size:.75rem; letter-spacing:3px; text-transform:uppercase; padding:6px 16px; margin-bottom:2rem; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.8rem,6vw,5.5rem); font-weight:900; line-height:1.05; color:var(--white); margin-bottom:1.5rem; }
+  .hero h1 em { color:var(--red-light); font-style:normal; }
+  .hero p { color:rgba(255,255,255,.6); font-size:1.05rem; line-height:1.7; max-width:520px; margin-bottom:2.5rem; }
+  .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; }
+  .btn-primary { background:var(--red); color:white; text-decoration:none; padding:15px 35px; font-size:.9rem; font-weight:500; letter-spacing:1px; text-transform:uppercase; transition:background .2s,transform .2s; display:inline-block; border:none; cursor:pointer; }
+  .btn-primary:hover { background:var(--red-light); transform:translateY(-2px); }
+  .btn-outline { border:1px solid rgba(255,255,255,.3); color:white; text-decoration:none; padding:15px 35px; font-size:.9rem; font-weight:500; letter-spacing:1px; text-transform:uppercase; transition:border-color .2s,transform .2s; display:inline-block; }
+  .btn-outline:hover { border-color:var(--red-light); transform:translateY(-2px); }
+  .hero-since { position:absolute; right:8%; bottom:12%; text-align:right; }
+  .hero-since .big { font-family:'Playfair Display',serif; font-size:5rem; font-weight:900; color:rgba(255,255,255,.05); line-height:1; }
+  .hero-since .lbl { color:rgba(255,255,255,.25); font-size:.75rem; letter-spacing:3px; text-transform:uppercase; }
+
+  /* STATS */
+  .stats { background:var(--red-dark); display:grid; grid-template-columns:repeat(4,1fr); }
+  .stat { padding:2.5rem 2rem; text-align:center; border-right:1px solid rgba(255,255,255,.1); }
+  .stat:last-child { border-right:none; }
+  .stat .num { font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:900; color:white; line-height:1; }
+  .stat .lbl { color:rgba(255,255,255,.65); font-size:.75rem; letter-spacing:2px; text-transform:uppercase; margin-top:.5rem; }
+
+  /* SECTIONS */
+  .sec { padding:7rem 8%; }
+  .sec-tag { color:var(--red); font-size:.72rem; font-weight:500; letter-spacing:3px; text-transform:uppercase; margin-bottom:.8rem; }
+  .sec-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:700; line-height:1.2; margin-bottom:1.4rem; }
+  .sec-sub { color:var(--grey); font-size:1rem; line-height:1.7; max-width:600px; }
+
+  /* SERVICES */
+  #services { background:var(--dark); }
+  #services .sec-tag { color:var(--red-light); }
+  #services .sec-title { color:white; }
+  #services .sec-sub { color:rgba(255,255,255,.4); }
+  .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.06); margin-top:4rem; }
+  .service-card { background:#1E1E1E; padding:2.5rem 2rem; transition:background .3s; position:relative; overflow:hidden; }
+  .service-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:0; background:var(--red); transition:height .4s ease; }
+  .service-card:hover { background:#242424; }
+  .service-card:hover::before { height:100%; }
+  .service-icon { width:52px; height:52px; background:rgba(192,57,43,.15); display:flex; align-items:center; justify-content:center; margin-bottom:1.5rem; font-size:1.5rem; }
+  .service-card h3 { color:white; font-size:1.05rem; font-weight:500; margin-bottom:.8rem; }
+  .service-card p { color:rgba(255,255,255,.42); font-size:.88rem; line-height:1.6; }
+
+  /* ABOUT */
+  #about { background:var(--cream); }
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; margin-top:4rem; }
+  .about-visual { position:relative; aspect-ratio:4/5; background:var(--dark); }
+  .about-frame { position:absolute; top:-15px; right:-15px; width:55%; height:45%; border:2px solid var(--red); z-index:0; }
+  .about-inner { position:absolute; inset:0; background:linear-gradient(135deg,#2a2a2a 0%,#1a1a1a 100%); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:1rem; z-index:1; }
+  .paint-ico { font-size:4rem; opacity:.35; }
+  .artisan-txt { color:rgba(255,255,255,.2); font-size:.75rem; letter-spacing:2px; text-transform:uppercase; }
+  .since-badge { position:absolute; bottom:-20px; right:-20px; background:var(--red); color:white; width:110px; height:110px; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:2; }
+  .since-badge .yr { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:900; line-height:1; }
+  .since-badge .since-txt { font-size:.65rem; letter-spacing:2px; text-transform:uppercase; opacity:.8; }
+  .checks { margin:2rem 0; display:flex; flex-direction:column; gap:1rem; }
+  .check-item { display:flex; align-items:flex-start; gap:1rem; }
+  .check-dot { width:22px; height:22px; background:var(--red); flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; }
+  .check-dot svg { width:12px; }
+  .check-item p { font-size:.95rem; line-height:1.5; }
+
+  /* DEVIS SECTION */
+  #devis { background:var(--red-dark); padding:7rem 8%; text-align:center; }
+  #devis .sec-tag { color:rgba(255,255,255,.55); }
+  #devis .sec-title { color:white; }
+  #devis .sec-sub { color:rgba(255,255,255,.65); margin:0 auto 3rem; }
+  .devis-box { display:inline-flex; gap:3rem; align-items:center; background:rgba(0,0,0,.2); padding:2.5rem 4rem; flex-wrap:wrap; justify-content:center; }
+  .ci-label { color:rgba(255,255,255,.5); font-size:.7rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:.4rem; }
+  .ci-value { color:white; font-size:1.2rem; font-weight:500; text-decoration:none; display:block; transition:color .2s; }
+  .ci-value:hover { color:rgba(255,210,190,1); }
+  .ci-divider { width:1px; height:50px; background:rgba(255,255,255,.15); }
+  .free-badge { border:1px solid rgba(255,255,255,.25); color:white; padding:8px 20px; font-size:.8rem; letter-spacing:2px; text-transform:uppercase; display:inline-block; margin-top:2rem; }
+
+  /* ZONE */
+  #zone { background:var(--light-grey); }
+  .zone-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; margin-top:4rem; }
+  .zone-list { display:flex; flex-direction:column; gap:.6rem; margin-top:1.5rem; }
+  .zone-item { display:flex; align-items:center; gap:1rem; padding:.9rem 1.2rem; background:white; border-left:3px solid transparent; transition:border-color .2s,transform .2s; }
+  .zone-item:hover { border-left-color:var(--red); transform:translateX(4px); }
+  .zone-dot { width:8px; height:8px; background:var(--red); border-radius:50%; flex-shrink:0; }
+  .zone-item span { font-size:.9rem; font-weight:500; }
+  .map-box { aspect-ratio:4/3; background:var(--dark); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:1rem; color:rgba(255,255,255,.35); font-size:.9rem; letter-spacing:1px; position:relative; overflow:hidden; }
+  .map-box::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 50%,rgba(192,57,43,.2) 0%,transparent 60%); }
+  .map-pin { font-size:3rem; position:relative; z-index:1; }
+  .map-box p { position:relative; z-index:1; }
+
+  /* TEMOIGNAGES */
+  #temoignages { background:var(--cream); }
+  .temoignages-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:4rem; }
+  .temoignage { background:white; padding:2rem; border-bottom:3px solid transparent; transition:border-color .3s,transform .3s; }
+  .temoignage:hover { border-bottom-color:var(--red); transform:translateY(-4px); }
+  .stars { color:var(--red); margin-bottom:1rem; font-size:1rem; letter-spacing:2px; }
+  .temoignage blockquote { color:var(--grey); font-size:.9rem; line-height:1.7; margin-bottom:1.5rem; font-style:italic; quotes:none; }
+  .t-author { font-weight:500; font-size:.85rem; color:var(--dark); }
+  .t-location { font-size:.75rem; color:var(--grey); }
+
+  /* FOOTER */
+  footer { background:var(--dark); color:rgba(255,255,255,.45); padding:2.5rem 8%; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; border-top:2px solid var(--red-dark); }
+  .footer-logo { font-family:'Playfair Display',serif; color:white; font-size:1.1rem; }
+  .footer-logo span { color:var(--red-light); }
+  footer p { font-size:.8rem; }
+  .footer-links { display:flex; gap:2rem; }
+  .footer-links a { color:rgba(255,255,255,.4); text-decoration:none; font-size:.8rem; transition:color .2s; }
+  .footer-links a:hover { color:var(--red-light); }
+
+  /* ====== AGENT IA CHAT WIDGET ====== */
+  #chat-btn {
+    position:fixed; bottom:28px; right:28px; z-index:1000;
+    width:62px; height:62px; background:var(--red); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; box-shadow:0 4px 20px rgba(192,57,43,.5);
+    border:none; transition:transform .2s, box-shadow .2s;
+    animation: pulse-ring 2s ease infinite;
+  }
+  #chat-btn:hover { transform:scale(1.08); box-shadow:0 6px 28px rgba(192,57,43,.7); }
+  #chat-btn svg { width:28px; height:28px; fill:white; }
+  @keyframes pulse-ring {
+    0%,100% { box-shadow:0 4px 20px rgba(192,57,43,.5); }
+    50% { box-shadow:0 4px 32px rgba(192,57,43,.9), 0 0 0 8px rgba(192,57,43,.15); }
+  }
+  #chat-badge {
+    position:absolute; top:-4px; right:-4px; background:#27ae60;
+    width:16px; height:16px; border-radius:50%; border:2px solid white;
+    animation:blink 1.5s ease infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  #chat-panel {
+    position:fixed; bottom:105px; right:28px; z-index:999;
+    width:380px; max-height:600px;
+    background:white; border-radius:12px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+    display:none; flex-direction:column; overflow:hidden;
+    border:1px solid rgba(0,0,0,.08);
+  }
+  #chat-panel.open { display:flex; animation:slideUp .3s ease; }
+  @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  .chat-header {
+    background:var(--dark); color:white; padding:1rem 1.2rem;
+    display:flex; align-items:center; gap:.8rem;
+    border-bottom:2px solid var(--red);
+  }
+  .chat-avatar {
+    width:40px; height:40px; background:var(--red); border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0;
+  }
+  .chat-header-info { flex:1; }
+  .chat-header-info strong { display:block; font-size:.95rem; }
+  .chat-header-info span { font-size:.72rem; color:rgba(255,255,255,.5); letter-spacing:1px; }
+  .chat-online { display:flex; align-items:center; gap:.4rem; font-size:.7rem; color:#2ecc71; margin-top:.15rem; }
+  .chat-online::before { content:''; width:7px; height:7px; background:#2ecc71; border-radius:50%; display:inline-block; }
+  .chat-close { background:none; border:none; color:rgba(255,255,255,.5); cursor:pointer; font-size:1.3rem; padding:.2rem; transition:color .2s; }
+  .chat-close:hover { color:white; }
+
+  .chat-messages {
+    flex:1; overflow-y:auto; padding:1.2rem; display:flex; flex-direction:column; gap:.8rem;
+    max-height:380px; background:#f8f8f8;
+  }
+  .chat-messages::-webkit-scrollbar { width:4px; }
+  .chat-messages::-webkit-scrollbar-track { background:transparent; }
+  .chat-messages::-webkit-scrollbar-thumb { background:rgba(0,0,0,.15); border-radius:4px; }
+
+  .msg { max-width:85%; display:flex; flex-direction:column; gap:.2rem; }
+  .msg.bot { align-self:flex-start; }
+  .msg.user { align-self:flex-end; }
+  .msg-bubble {
+    padding:.7rem 1rem; border-radius:12px; font-size:.875rem; line-height:1.5;
+  }
+  .msg.bot .msg-bubble { background:white; color:var(--dark); box-shadow:0 1px 4px rgba(0,0,0,.1); border-bottom-left-radius:4px; }
+  .msg.user .msg-bubble { background:var(--red); color:white; border-bottom-right-radius:4px; }
+  .msg-time { font-size:.65rem; color:var(--grey); align-self:flex-end; }
+  .msg.bot .msg-time { align-self:flex-start; }
+
+  .typing-indicator { display:flex; gap:4px; padding:.7rem 1rem; background:white; border-radius:12px; width:fit-content; box-shadow:0 1px 4px rgba(0,0,0,.1); }
+  .typing-indicator span { width:7px; height:7px; background:var(--grey); border-radius:50%; animation:typing .9s ease infinite; }
+  .typing-indicator span:nth-child(2) { animation-delay:.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay:.4s; }
+  @keyframes typing { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+
+  .chat-options { display:flex; flex-wrap:wrap; gap:.5rem; padding:.8rem 1.2rem; background:white; border-top:1px solid #eee; }
+  .chat-opt-btn {
+    border:1.5px solid var(--red); color:var(--red); background:transparent;
+    padding:.4rem .9rem; border-radius:20px; font-size:.78rem; cursor:pointer; transition:all .2s;
+  }
+  .chat-opt-btn:hover { background:var(--red); color:white; }
+
+  .chat-input-row {
+    display:flex; gap:.5rem; padding:.8rem 1rem; background:white; border-top:1px solid #eee; align-items:flex-end;
+  }
+  #chat-input {
+    flex:1; border:1.5px solid #e0e0e0; border-radius:8px; padding:.6rem .9rem;
+    font-size:.875rem; font-family:inherit; resize:none; outline:none; transition:border-color .2s;
+    max-height:80px; overflow-y:auto;
+  }
+  #chat-input:focus { border-color:var(--red); }
+  #chat-send {
+    background:var(--red); border:none; border-radius:8px; width:38px; height:38px;
+    display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background .2s; flex-shrink:0;
+  }
+  #chat-send:hover { background:var(--red-light); }
+  #chat-send svg { width:16px; height:16px; fill:white; }
+
+  /* DEVIS MODAL */
+  #devis-modal {
+    display:none; position:fixed; inset:0; z-index:2000;
+    background:rgba(0,0,0,.7); align-items:center; justify-content:center; padding:1rem;
+  }
+  #devis-modal.open { display:flex; }
+  .devis-modal-box {
+    background:white; width:100%; max-width:600px; max-height:90vh; overflow-y:auto;
+    border-radius:8px; box-shadow:0 30px 80px rgba(0,0,0,.4);
+  }
+  .devis-modal-header {
+    background:var(--dark); color:white; padding:1.5rem 2rem;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:2px solid var(--red);
+  }
+  .devis-modal-header h3 { font-family:'Playfair Display',serif; font-size:1.3rem; }
+  .modal-close { background:none; border:none; color:rgba(255,255,255,.6); font-size:1.5rem; cursor:pointer; }
+  .devis-modal-body { padding:2rem; }
+  .devis-logo-row { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:2rem; padding-bottom:1.5rem; border-bottom:1px solid #eee; }
+  .devis-company-name { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:var(--dark); }
+  .devis-company-name span { color:var(--red); }
+  .devis-company-info { font-size:.8rem; color:var(--grey); line-height:1.6; margin-top:.3rem; }
+  .devis-num { text-align:right; }
+  .devis-num .label { font-size:.7rem; letter-spacing:2px; text-transform:uppercase; color:var(--grey); }
+  .devis-num .value { font-size:1.1rem; font-weight:700; color:var(--dark); margin-top:.2rem; }
+  .devis-num .date { font-size:.8rem; color:var(--grey); margin-top:.2rem; }
+  .devis-client-box { background:#f8f8f8; padding:1rem 1.2rem; border-left:3px solid var(--red); margin-bottom:1.5rem; }
+  .devis-client-box .label { font-size:.7rem; letter-spacing:2px; text-transform:uppercase; color:var(--grey); margin-bottom:.4rem; }
+  .devis-client-box .name { font-weight:600; font-size:1rem; color:var(--dark); }
+  .devis-client-box .info { font-size:.85rem; color:var(--grey); }
+  .devis-table { width:100%; border-collapse:collapse; margin-bottom:1.5rem; }
+  .devis-table th { background:var(--dark); color:white; padding:.7rem 1rem; text-align:left; font-size:.78rem; letter-spacing:1px; text-transform:uppercase; font-weight:500; }
+  .devis-table td { padding:.8rem 1rem; border-bottom:1px solid #eee; font-size:.88rem; }
+  .devis-table tr:last-child td { border-bottom:none; }
+  .devis-table .price { text-align:right; font-weight:600; }
+  .devis-totals { margin-left:auto; width:280px; }
+  .devis-total-row { display:flex; justify-content:space-between; padding:.4rem 0; font-size:.88rem; color:var(--grey); }
+  .devis-total-row.grand { border-top:2px solid var(--dark); margin-top:.5rem; padding-top:.7rem; font-weight:700; font-size:1.05rem; color:var(--dark); }
+  .devis-footer-note { margin-top:1.5rem; padding:1rem; background:#fff8f7; border:1px solid rgba(192,57,43,.2); border-radius:4px; font-size:.8rem; color:var(--grey); line-height:1.6; }
+  .devis-sign-section { margin-top:1.5rem; border-top:1px dashed #ccc; padding-top:1.5rem; }
+  .devis-sign-section .sign-label { font-size:.78rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--grey); margin-bottom:.5rem; }
+  #signature-canvas { border:1.5px solid #ddd; border-radius:4px; cursor:crosshair; display:block; touch-action:none; }
+  .sign-actions { display:flex; gap:.8rem; margin-top:.8rem; flex-wrap:wrap; }
+  .btn-clear { background:transparent; border:1.5px solid #ccc; color:var(--grey); padding:8px 18px; font-size:.8rem; cursor:pointer; border-radius:4px; }
+  .btn-sign { background:var(--red); color:white; border:none; padding:10px 24px; font-size:.85rem; font-weight:500; cursor:pointer; border-radius:4px; letter-spacing:.5px; transition:background .2s; }
+  .btn-sign:hover { background:var(--red-light); }
+  .btn-download { background:var(--dark); color:white; border:none; padding:10px 24px; font-size:.85rem; cursor:pointer; border-radius:4px; transition:background .2s; }
+  .btn-download:hover { background:#333; }
+
+  /* CALENDAR CONFIRM */
+  #cal-modal { display:none; position:fixed; inset:0; z-index:2001; background:rgba(0,0,0,.7); align-items:center; justify-content:center; padding:1rem; }
+  #cal-modal.open { display:flex; }
+  .cal-box { background:white; width:100%; max-width:440px; border-radius:8px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,.4); }
+  .cal-header { background:var(--red); color:white; padding:1.5rem 2rem; text-align:center; }
+  .cal-header h3 { font-family:'Playfair Display',serif; font-size:1.3rem; }
+  .cal-header p { font-size:.85rem; opacity:.8; margin-top:.3rem; }
+  .cal-body { padding:2rem; }
+  .cal-info-row { display:flex; align-items:center; gap:1rem; padding:.8rem 0; border-bottom:1px solid #eee; }
+  .cal-info-row:last-of-type { border-bottom:none; }
+  .cal-icon { font-size:1.3rem; }
+  .cal-info-row strong { font-size:.95rem; display:block; }
+  .cal-info-row span { font-size:.82rem; color:var(--grey); }
+  .cal-actions { display:flex; gap:.8rem; margin-top:1.5rem; }
+  .btn-cal { flex:1; background:var(--red); color:white; border:none; padding:12px; font-size:.88rem; font-weight:500; cursor:pointer; border-radius:4px; transition:background .2s; }
+  .btn-cal:hover { background:var(--red-light); }
+  .btn-cal-outline { flex:1; background:transparent; border:1.5px solid var(--grey); color:var(--grey); padding:12px; font-size:.88rem; cursor:pointer; border-radius:4px; }
+  .cal-success { text-align:center; padding:2rem; }
+  .cal-success .big-check { font-size:3.5rem; }
+  .cal-success h4 { font-family:'Playfair Display',serif; font-size:1.3rem; margin:.8rem 0 .5rem; }
+  .cal-success p { color:var(--grey); font-size:.9rem; line-height:1.6; }
+  .cal-success a { display:inline-block; margin-top:1.2rem; background:var(--red); color:white; text-decoration:none; padding:10px 24px; border-radius:4px; font-size:.85rem; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+  .fadein { opacity:0; transform:translateY(28px); transition:opacity .7s ease,transform .7s ease; }
+  .fadein.visible { opacity:1; transform:translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width:900px) {
+    .nav-links,.nav-cta { display:none; }
+    .stats { grid-template-columns:repeat(2,1fr); }
+    .stat { border-right:none; border-bottom:1px solid rgba(255,255,255,.1); }
+    .services-grid,.about-grid,.zone-grid,.temoignages-grid { grid-template-columns:1fr; }
+    .about-grid { gap:3rem; }
+    .about-visual { aspect-ratio:3/2; }
+    .hero-since { display:none; }
+    .devis-box { flex-direction:column; gap:1.5rem; padding:2rem; }
+    .ci-divider { width:50px; height:1px; }
+    #chat-panel { width:calc(100vw - 2rem); right:1rem; bottom:100px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">KHILI<span>.</span>PEINTURE</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">&#192; propos</a></li>
+    <li><a href="#zone">Zone</a></li>
+    <li><a href="#temoignages">Avis</a></li>
+    <li><a href="#devis">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="openChat()">Devis gratuit</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Artisan peintre &bull; Draguignan &bull; Depuis 2011</div>
+    <h1>L'art de <em>peindre</em>,<br>la passion du d&#233;tail.</h1>
+    <p>Peinture int&#233;rieure &amp; ext&#233;rieure, b&#233;ton cir&#233;, stucco, pose de papier peint, fa&#231;ade&#8230; Khili Peinture transforme vos espaces dans le Var avec savoir-faire et pr&#233;cision.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openChat()">Devis gratuit avec IA</button>
+      <a href="#services" class="btn-outline">Nos prestations</a>
+    </div>
+  </div>
+  <div class="hero-since">
+    <div class="big">2011</div>
+    <div class="lbl">En activit&#233;</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="num">+14</div><div class="lbl">Ans d'exp&#233;rience</div></div>
+  <div class="stat"><div class="num">6</div><div class="lbl">Prestations</div></div>
+  <div class="stat"><div class="num">100%</div><div class="lbl">Devis gratuit</div></div>
+  <div class="stat"><div class="num">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="lbl">Satisfaction client</div></div>
+</div>
+
+<!-- SERVICES -->
+<section id="services" class="sec">
+  <div class="sec-tag">Ce que nous faisons</div>
+  <div class="sec-title">Nos prestations</div>
+  <p class="sec-sub">Une gamme compl&#232;te de services en peinture et d&#233;coration pour tous vos projets.</p>
+  <div class="services-grid">
+    <div class="service-card fadein"><div class="service-icon">&#128396;</div><h3>Peinture Int&#233;rieure</h3><p>Murs, plafonds, boiseries&#8230; R&#233;novation compl&#232;te ou rafra&#238;chissement avec les meilleures finitions.</p></div>
+    <div class="service-card fadein"><div class="service-icon">&#127968;</div><h3>Peinture Ext&#233;rieure</h3><p>Fa&#231;ades, volets, murs ext&#233;rieurs. Protection durable et esth&#233;tique impeccable.</p></div>
+    <div class="service-card fadein"><div class="service-icon">&#10024;</div><h3>B&#233;ton Cir&#233;</h3><p>Rev&#234;tement tendance pour sols et murs. Effet lisse et lustr&#233;, r&#233;sistant et facile d'entretien.</p></div>
+    <div class="service-card fadein"><div class="service-icon">&#127775;</div><h3>Stucco D&#233;coratif</h3><p>Effet pierre, marbre ou relief. Technique artisanale haut de gamme.</p></div>
+    <div class="service-card fadein"><div class="service-icon">&#128196;</div><h3>Pose de Papier Peint</h3><p>Classiques, panoramiques ou vinyles. Pose soign&#233;e, raccords parfaits.</p></div>
+    <div class="service-card fadein"><div class="service-icon">&#127959;</div><h3>Ravalement de Fa&#231;ade</h3><p>Nettoyage, traitement et peinture. Redonnez un &#233;clat neuf &#224; votre b&#226;timent.</p></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="sec">
+  <div class="about-grid">
+    <div class="about-visual fadein">
+      <div class="about-frame"></div>
+      <div class="about-inner"><div class="paint-ico">&#127912;</div><div class="artisan-txt">Artisan peintre</div></div>
+      <div class="since-badge"><div class="yr">2011</div><div class="since-txt">Depuis</div></div>
+    </div>
+    <div class="fadein">
+      <div class="sec-tag">Notre histoire</div>
+      <div class="sec-title">Khili Peinture,<br>l'artisanat au service<br>de votre int&#233;rieur.</div>
+      <p class="sec-sub">Fond&#233;e en 2011 &#224; Draguignan, Khili Peinture met son expertise au service des particuliers et professionnels du Var. Chaque chantier est trait&#233; avec le m&#234;me soin et la m&#234;me exigence.</p>
+      <div class="checks">
+        <div class="check-item"><div class="check-dot"><svg viewBox="0 0 12 12" fill="none"><polyline points="1,6 4,9 11,2" stroke="white" stroke-width="2"/></svg></div><p><strong>Plus de 14 ans d'exp&#233;rience</strong> dans le b&#226;timent et la d&#233;coration.</p></div>
+        <div class="check-item"><div class="check-dot"><svg viewBox="0 0 12 12" fill="none"><polyline points="1,6 4,9 11,2" stroke="white" stroke-width="2"/></svg></div><p><strong>Devis gratuit et sans engagement</strong> pour tous vos projets.</p></div>
+        <div class="check-item"><div class="check-dot"><svg viewBox="0 0 12 12" fill="none"><polyline points="1,6 4,9 11,2" stroke="white" stroke-width="2"/></svg></div><p><strong>Produits de qualit&#233; professionnelle</strong>, durables et r&#233;sistants.</p></div>
+        <div class="check-item"><div class="check-dot"><svg viewBox="0 0 12 12" fill="none"><polyline points="1,6 4,9 11,2" stroke="white" stroke-width="2"/></svg></div><p><strong>Accompagnement personnalis&#233;</strong> du devis jusqu'&#224; la livraison.</p></div>
+      </div>
+      <button class="btn-primary" style="margin-top:1.5rem" onclick="openChat()">Demander un devis IA</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="devis">
+  <div class="sec-tag">Contact</div>
+  <div class="sec-title">Devis gratuit &amp;<br>sans engagement</div>
+  <p class="sec-sub">Utilisez notre assistant IA ou contactez-nous directement. R&#233;ponse rapide garantie.</p>
+  <div class="devis-box fadein">
+    <div><div class="ci-label">T&#233;l&#233;phone</div><a href="tel:0606871312" class="ci-value">06 06 87 13 12</a></div>
+    <div class="ci-divider"></div>
+    <div><div class="ci-label">Email</div><a href="mailto:khilipeinture@yahoo.fr" class="ci-value">khilipeinture&#64;yahoo.fr</a></div>
+    <div class="ci-divider"></div>
+    <div><div class="ci-label">Disponibilit&#233;</div><div class="ci-value">Lun &#8211; Sam &middot; 8h &#8211; 19h</div></div>
+    <div class="ci-divider"></div>
+    <div><div class="ci-label">Localisation</div><div class="ci-value">Draguignan (83)</div></div>
+  </div>
+  <div style="margin-top:1.5rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+    <button class="btn-primary" onclick="openChat()" style="font-size:.85rem">&#129302; Devis avec assistant IA</button>
+    <div class="free-badge">&#10003; Devis 100% gratuit</div>
+  </div>
+</section>
+
+<!-- ZONE -->
+<section id="zone" class="sec">
+  <div class="zone-grid">
+    <div class="fadein">
+      <div class="sec-tag">D&#233;placement</div>
+      <div class="sec-title">Zone d'intervention</div>
+      <p class="sec-sub">Nous intervenons &#224; Draguignan et dans les communes environnantes du Var.</p>
+      <div class="zone-list">
+        <div class="zone-item"><div class="zone-dot"></div><span>Draguignan (83300)</span></div>
+        <div class="zone-item"><div class="zone-dot"></div><span>Trans-en-Provence</span></div>
+        <div class="zone-item"><div class="zone-dot"></div><span>Lorgues</span></div>
+        <div class="zone-item"><div class="zone-dot"></div><span>Les Arcs-sur-Argens</span></div>
+        <div class="zone-item"><div class="zone-dot"></div><span>Flayosc</span></div>
+        <div class="zone-item"><div class="zone-dot"></div><span>Fr&#233;jus / Saint-Raphael</span></div>
+        <div class="zone-item"><div class="zone-dot"></div><span>Brignoles</span></div>
+        <div class="zone-item"><div class="zone-dot"></div><span>Var (83) &amp; alentours</span></div>
+      </div>
+    </div>
+    <div class="map-box fadein"><div class="map-pin">&#128205;</div><p>Draguignan &amp; Var (83)</p></div>
+  </div>
+</section>
+
+<!-- TEMOIGNAGES -->
+<section id="temoignages" class="sec">
+  <div class="sec-tag">Ils nous font confiance</div>
+  <div class="sec-title">Avis clients</div>
+  <div class="temoignages-grid">
+    <div class="temoignage fadein"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>Travail impeccable pour notre salon. Les murs sont parfaitement lisses, tr&#232;s professionnel et ponctuel.</blockquote><div class="t-author">Sophie M.</div><div class="t-location">Draguignan (83)</div></div>
+    <div class="temoignage fadein"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>B&#233;ton cir&#233; dans ma cuisine, r&#233;sultat bluffant ! Devis honn&#234;te et d&#233;lais respect&#233;s.</blockquote><div class="t-author">Karim B.</div><div class="t-location">Lorgues (83)</div></div>
+    <div class="temoignage fadein"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><blockquote>Fa&#231;ade refaite &#224; neuf, vraiment satisfait. Bon rapport qualit&#233;/prix et &#233;quipe s&#233;rieuse.</blockquote><div class="t-author">Patrick L.</div><div class="t-location">Fr&#233;jus (83)</div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">KHILI<span>.</span>PEINTURE</div>
+  <p>&#169; 2025 Khili Peinture &middot; Artisan depuis 2011 &middot; Draguignan, Var</p>
+  <div class="footer-links">
+    <a href="tel:0606871312">06 06 87 13 12</a>
+    <a href="mailto:khilipeinture@yahoo.fr">khilipeinture&#64;yahoo.fr</a>
+  </div>
+</footer>
+
+<!-- ====== CHAT WIDGET ====== -->
+<button id="chat-btn" onclick="openChat()" title="Assistant devis IA">
+  <div id="chat-badge"></div>
+  <svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2zm-2 10H6V10h12v2zm0-3H6V7h12v2z"/></svg>
+</button>
+
+<div id="chat-panel">
+  <div class="chat-header">
+    <div class="chat-avatar">&#129302;</div>
+    <div class="chat-header-info">
+      <strong>Assistant Khili Peinture</strong>
+      <div class="chat-online">En ligne &#8211; r&#233;pond instantan&#233;ment</div>
+    </div>
+    <button class="chat-close" onclick="closeChat()">&#10005;</button>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-options" id="chat-options"></div>
+  <div class="chat-input-row">
+    <textarea id="chat-input" placeholder="Tapez votre message..." rows="1" onkeydown="handleKey(event)"></textarea>
+    <button id="chat-send" onclick="sendUserMessage()">
+      <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- DEVIS MODAL -->
+<div id="devis-modal">
+  <div class="devis-modal-box">
+    <div class="devis-modal-header">
+      <h3>Votre Devis Khili Peinture</h3>
+      <button class="modal-close" onclick="closeDevisModal()">&#10005;</button>
+    </div>
+    <div class="devis-modal-body" id="devis-modal-body"></div>
+  </div>
+</div>
+
+<!-- CALENDAR MODAL -->
+<div id="cal-modal">
+  <div class="cal-box">
+    <div class="cal-header">
+      <h3>&#128197; R&#233;servation confirm&#233;e</h3>
+      <p>Votre chantier est programm&#233;</p>
+    </div>
+    <div class="cal-body" id="cal-body"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const STATE = {
+  step: 'init',
+  clientName: '',
+  clientEmail: '',
+  clientPhone: '',
+  clientAddress: '',
+  services: [],
+  surface: 0,
+  details: '',
+  preferredDate: '',
+  devisNum: '',
+  totalHT: 0,
+  totalTTC: 0,
+  signed: false,
+  history: []   // {role, content}
+};
+
+// TARIFS (EUR HT par m²)
+const TARIFS = {
+  'peinture intérieure': { prix: 18, unite: 'm²', label: 'Peinture intérieure' },
+  'peinture extérieure': { prix: 22, unite: 'm²', label: 'Peinture extérieure' },
+  'béton ciré': { prix: 65, unite: 'm²', label: 'Béton ciré' },
+  'stucco': { prix: 55, unite: 'm²', label: 'Stucco décoratif' },
+  'papier peint': { prix: 28, unite: 'm²', label: 'Pose papier peint' },
+  'ravalement': { prix: 35, unite: 'm²', label: 'Ravalement de façade' }
+};
+const TVA = 0.10;
+const DEPL = 60; // forfait déplacement HT
+
+function genDevisNum() {
+  const d = new Date();
+  return `KP-${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}-${Math.floor(Math.random()*900+100)}`;
+}
+
+// ============================================================
+// CHAT OPEN / CLOSE
+// ============================================================
+function openChat() {
+  document.getElementById('chat-panel').classList.add('open');
+  if (!STATE.started) {
+    STATE.started = true;
+    setTimeout(()=> botStart(), 400);
+  }
+}
+function closeChat() { document.getElementById('chat-panel').classList.remove('open'); }
+
+// ============================================================
+// MESSAGES
+// ============================================================
+function addMsg(role, text, delay=0) {
+  const msgs = document.getElementById('chat-messages');
+  if (role === 'bot') {
+    const typing = document.createElement('div');
+    typing.className = 'msg bot';
+    typing.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+    msgs.appendChild(typing);
+    msgs.scrollTop = msgs.scrollHeight;
+    setTimeout(() => {
+      typing.remove();
+      const m = document.createElement('div');
+      m.className = 'msg bot';
+      m.innerHTML = `<div class="msg-bubble">${text}</div><div class="msg-time">${now()}</div>`;
+      msgs.appendChild(m);
+      msgs.scrollTop = msgs.scrollHeight;
+    }, delay || 800);
+  } else {
+    const m = document.createElement('div');
+    m.className = 'msg user';
+    m.innerHTML = `<div class="msg-bubble">${text}</div><div class="msg-time">${now()}</div>`;
+    msgs.appendChild(m);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+}
+
+function now() {
+  return new Date().toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+}
+
+function setOptions(opts) {
+  const el = document.getElementById('chat-options');
+  el.innerHTML = '';
+  opts.forEach(o => {
+    const btn = document.createElement('button');
+    btn.className = 'chat-opt-btn';
+    btn.textContent = o.label;
+    btn.onclick = () => { addMsg('user', o.label); el.innerHTML=''; setTimeout(()=> o.action(), 300); };
+    el.appendChild(btn);
+  });
+}
+
+function clearOptions() { document.getElementById('chat-options').innerHTML=''; }
+
+// ============================================================
+// INPUT
+// ============================================================
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendUserMessage(); }
+}
+
+function sendUserMessage() {
+  const inp = document.getElementById('chat-input');
+  const val = inp.value.trim();
+  if (!val) return;
+  addMsg('user', val);
+  inp.value = '';
+  clearOptions();
+  setTimeout(()=> handleUserInput(val), 300);
+}
+
+// ============================================================
+// FLOW
+// ============================================================
+function botStart() {
+  STATE.step = 'ask_name';
+  addMsg('bot', `Bonjour ! 👋 Je suis l'assistant de <strong>Khili Peinture</strong>.<br>Je vais vous préparer un devis personnalisé en quelques questions.<br><br>Pour commencer, quel est votre <strong>prénom et nom</strong> ?`, 600);
+}
+
+function handleUserInput(val) {
+  switch(STATE.step) {
+    case 'ask_name': handleName(val); break;
+    case 'ask_email': handleEmail(val); break;
+    case 'ask_phone': handlePhone(val); break;
+    case 'ask_address': handleAddress(val); break;
+    case 'ask_surface': handleSurface(val); break;
+    case 'ask_details': handleDetails(val); break;
+    case 'ask_date': handleDate(val); break;
+    default:
+      callClaude(val);
+  }
+}
+
+function handleName(val) {
+  if (val.length < 2) { addMsg('bot','Pouvez-vous préciser votre nom complet ?'); return; }
+  STATE.clientName = val;
+  STATE.step = 'ask_email';
+  addMsg('bot', `Enchanté, <strong>${val}</strong> ! 😊<br>Quelle est votre <strong>adresse email</strong> pour recevoir le devis ?`);
+}
+
+function handleEmail(val) {
+  if (!/\S+@\S+\.\S+/.test(val)) { addMsg('bot','Cet email ne semble pas valide. Pouvez-vous le vérifier ?'); return; }
+  STATE.clientEmail = val;
+  STATE.step = 'ask_phone';
+  addMsg('bot', `Parfait ! Et votre <strong>numéro de téléphone</strong> ?`);
+}
+
+function handlePhone(val) {
+  STATE.clientPhone = val;
+  STATE.step = 'ask_address';
+  addMsg('bot', `Très bien. Quelle est l'<strong>adresse du chantier</strong> (ville, rue...) ?`);
+}
+
+function handleAddress(val) {
+  STATE.clientAddress = val;
+  STATE.step = 'ask_service';
+  addMsg('bot', `Super ! Maintenant dites-moi : <strong>quel(s) travaux</strong> souhaitez-vous faire ?`);
+  setTimeout(()=> {
+    setOptions([
+      { label: '🖌️ Peinture intérieure', action: ()=> selectService('peinture intérieure') },
+      { label: '🏠 Peinture extérieure', action: ()=> selectService('peinture extérieure') },
+      { label: '✨ Béton ciré', action: ()=> selectService('béton ciré') },
+      { label: '🌟 Stucco', action: ()=> selectService('stucco') },
+      { label: '📄 Papier peint', action: ()=> selectService('papier peint') },
+      { label: '🏗️ Ravalement façade', action: ()=> selectService('ravalement') },
+    ]);
+  }, 900);
+}
+
+function selectService(s) {
+  if (!STATE.services.includes(s)) STATE.services.push(s);
+  STATE.step = 'ask_more_service';
+  addMsg('bot', `<strong>${TARIFS[s].label}</strong> ajouté ✅<br>Souhaitez-vous ajouter d'autres prestations ?`);
+  setTimeout(()=> {
+    setOptions([
+      { label: '➕ Ajouter une prestation', action: ()=> {
+        STATE.step='ask_service';
+        addMsg('bot','Choisissez une autre prestation :');
+        setTimeout(()=>{
+          setOptions([
+            { label: '🖌️ Peinture intérieure', action: ()=> selectService('peinture intérieure') },
+            { label: '🏠 Peinture extérieure', action: ()=> selectService('peinture extérieure') },
+            { label: '✨ Béton ciré', action: ()=> selectService('béton ciré') },
+            { label: '🌟 Stucco', action: ()=> selectService('stucco') },
+            { label: '📄 Papier peint', action: ()=> selectService('papier peint') },
+            { label: '🏗️ Ravalement façade', action: ()=> selectService('ravalement') },
+          ]);
+        },800);
+      }},
+      { label: "✅ C'est tout", action: ()=> goAskSurface() },
+    ]);
+  }, 900);
+}
+
+function goAskSurface() {
+  STATE.step = 'ask_surface';
+  const sv = STATE.services.map(s=> TARIFS[s].label).join(', ');
+  addMsg('bot', `Parfait ! Vous avez sélectionné : <strong>${sv}</strong>.<br><br>Quelle est la <strong>surface approximative</strong> en m² à traiter ? (ex: 50, 120...)`);
+}
+
+function handleSurface(val) {
+  const n = parseFloat(val.replace(',','.'));
+  if (isNaN(n) || n <= 0) { addMsg('bot','Pouvez-vous indiquer une surface en chiffres ? (ex: 45)'); return; }
+  STATE.surface = n;
+  STATE.step = 'ask_details';
+  addMsg('bot', `Avez-vous des <strong>précisions ou demandes spéciales</strong> ? (couleurs souhaitées, état des murs, contraintes d'accès...)<br>Ou tapez <em>"aucun"</em> pour continuer.`);
+}
+
+function handleDetails(val) {
+  STATE.details = val.toLowerCase() === 'aucun' ? '' : val;
+  STATE.step = 'ask_date';
+  addMsg('bot', `Très bien ! Pour quelle <strong>date souhaitez-vous démarrer les travaux</strong> ? (ex: 15 avril, début mai, semaine du 20...)`);
+}
+
+function handleDate(val) {
+  STATE.preferredDate = val;
+  STATE.step = 'confirm';
+  buildAndShowDevis();
+}
+
+// ============================================================
+// DEVIS CALCULATION
+// ============================================================
+function calcDevis() {
+  let lignes = [];
+  STATE.services.forEach(s => {
+    const t = TARIFS[s];
+    const qty = STATE.surface;
+    const total = qty * t.prix;
+    lignes.push({ label: t.label, unite: t.unite, qty, prixU: t.prix, total });
+  });
+  // Déplacement
+  lignes.push({ label: 'Forfait déplacement Draguignan & environs', unite: 'forfait', qty: 1, prixU: DEPL, total: DEPL });
+
+  const totalHT = lignes.reduce((a,l)=> a + l.total, 0);
+  const tva = totalHT * TVA;
+  const totalTTC = totalHT + tva;
+
+  STATE.totalHT = totalHT;
+  STATE.totalTTC = totalTTC;
+  STATE.lignes = lignes;
+  STATE.devisNum = genDevisNum();
+  return { lignes, totalHT, tva, totalTTC };
+}
+
+function buildAndShowDevis() {
+  const { lignes, totalHT, tva, totalTTC } = calcDevis();
+
+  // Chat message
+  addMsg('bot', `
+    ✅ J'ai préparé votre devis estimatif !<br><br>
+    📋 <strong>Récapitulatif</strong><br>
+    Surface : ${STATE.surface} m²<br>
+    Prestations : ${STATE.services.map(s=>TARIFS[s].label).join(', ')}<br>
+    <br>
+    💶 <strong>Montant estimé HT : ${totalHT.toFixed(2)} €</strong><br>
+    💶 Total TTC (TVA 10%) : <strong>${totalTTC.toFixed(2)} €</strong><br>
+    <br>
+    Cliquez ci-dessous pour voir et <strong>signer votre devis</strong> !
+  `);
+
+  setTimeout(()=> {
+    setOptions([
+      { label: '📄 Voir & signer le devis', action: ()=> openDevisModal() },
+      { label: '✏️ Modifier', action: ()=> {
+        clearOptions();
+        STATE.services=[];
+        addMsg('bot','D\'accord, recommençons. Quels travaux souhaitez-vous ?');
+        STATE.step='ask_service';
+        setTimeout(()=>{
+          setOptions([
+            { label: '🖌️ Peinture intérieure', action: ()=> selectService('peinture intérieure') },
+            { label: '🏠 Peinture extérieure', action: ()=> selectService('peinture extérieure') },
+            { label: '✨ Béton ciré', action: ()=> selectService('béton ciré') },
+            { label: '🌟 Stucco', action: ()=> selectService('stucco') },
+            { label: '📄 Papier peint', action: ()=> selectService('papier peint') },
+            { label: '🏗️ Ravalement façade', action: ()=> selectService('ravalement') },
+          ]);
+        },800);
+      }},
+    ]);
+  }, 1000);
+}
+
+// ============================================================
+// DEVIS MODAL
+// ============================================================
+function openDevisModal() {
+  clearOptions();
+  const { lignes, totalHT, tva, totalTTC } = { lignes: STATE.lignes, totalHT: STATE.totalHT, tva: STATE.totalHT * TVA, totalTTC: STATE.totalTTC };
+  const today = new Date().toLocaleDateString('fr-FR');
+  const validUntil = new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString('fr-FR');
+
+  let rows = lignes.map(l => `
+    <tr>
+      <td>${l.label}</td>
+      <td>${l.qty} ${l.unite}</td>
+      <td class="price">${l.prixU.toFixed(2)} €</td>
+      <td class="price">${l.total.toFixed(2)} €</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('devis-modal-body').innerHTML = `
+    <div class="devis-logo-row">
+      <div>
+        <div class="devis-company-name">KHILI<span>.</span>PEINTURE</div>
+        <div class="devis-company-info">
+          Artisan peintre depuis 2011<br>
+          Draguignan, Var (83)<br>
+          Tél : 06 06 87 13 12<br>
+          khilipeinture@yahoo.fr
+        </div>
+      </div>
+      <div class="devis-num">
+        <div class="label">DEVIS N°</div>
+        <div class="value">${STATE.devisNum}</div>
+        <div class="date">Date : ${today}</div>
+        <div class="date">Valable jusqu'au : ${validUntil}</div>
+      </div>
+    </div>
+
+    <div class="devis-client-box">
+      <div class="label">Client</div>
+      <div class="name">${STATE.clientName}</div>
+      <div class="info">${STATE.clientAddress}<br>${STATE.clientEmail} — ${STATE.clientPhone}</div>
+    </div>
+
+    ${STATE.details ? `<p style="margin-bottom:1rem;font-size:.88rem;color:#555"><strong>Précisions :</strong> ${STATE.details}</p>` : ''}
+
+    <table class="devis-table">
+      <thead><tr><th>Prestation</th><th>Quantité</th><th>Prix unit. HT</th><th>Total HT</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+
+    <div class="devis-totals">
+      <div class="devis-total-row"><span>Sous-total HT</span><span>${totalHT.toFixed(2)} €</span></div>
+      <div class="devis-total-row"><span>TVA 10%</span><span>${tva.toFixed(2)} €</span></div>
+      <div class="devis-total-row grand"><span>TOTAL TTC</span><span>${STATE.totalTTC.toFixed(2)} €</span></div>
+    </div>
+
+    <div class="devis-footer-note">
+      ⚠️ Ce devis est une estimation basée sur la surface indiquée. Le prix définitif sera établi après visite sur place.<br>
+      Paiement : 30% à la commande, solde à la livraison. Garantie décennale incluse.
+    </div>
+
+    <div class="devis-sign-section">
+      <div class="sign-label">Signature du client (bon pour accord)</div>
+      <canvas id="signature-canvas" width="520" height="120" style="width:100%;max-width:520px;"></canvas>
+      <div class="sign-actions">
+        <button class="btn-clear" onclick="clearSignature()">Effacer</button>
+        <button class="btn-sign" onclick="submitSignature()">✅ Signer &amp; valider le devis</button>
+        <button class="btn-download" onclick="downloadDevis()">⬇️ Télécharger PDF</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('devis-modal').classList.add('open');
+  initSignatureCanvas();
+}
+
+function closeDevisModal() { document.getElementById('devis-modal').classList.remove('open'); }
+
+// ============================================================
+// SIGNATURE CANVAS
+// ============================================================
+let sigCanvas, sigCtx, signing = false;
+
+function initSignatureCanvas() {
+  sigCanvas = document.getElementById('signature-canvas');
+  sigCtx = sigCanvas.getContext('2d');
+  sigCtx.strokeStyle = '#1A1A1A';
+  sigCtx.lineWidth = 2.5;
+  sigCtx.lineCap = 'round';
+
+  const pos = (e) => {
+    const r = sigCanvas.getBoundingClientRect();
+    const scaleX = sigCanvas.width / r.width;
+    const scaleY = sigCanvas.height / r.height;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return { x: (clientX - r.left) * scaleX, y: (clientY - r.top) * scaleY };
+  };
+
+  sigCanvas.addEventListener('mousedown', e => { signing=true; const p=pos(e); sigCtx.beginPath(); sigCtx.moveTo(p.x,p.y); });
+  sigCanvas.addEventListener('mousemove', e => { if(!signing)return; const p=pos(e); sigCtx.lineTo(p.x,p.y); sigCtx.stroke(); });
+  sigCanvas.addEventListener('mouseup', ()=> signing=false);
+  sigCanvas.addEventListener('touchstart', e => { e.preventDefault(); signing=true; const p=pos(e); sigCtx.beginPath(); sigCtx.moveTo(p.x,p.y); });
+  sigCanvas.addEventListener('touchmove', e => { e.preventDefault(); if(!signing)return; const p=pos(e); sigCtx.lineTo(p.x,p.y); sigCtx.stroke(); });
+  sigCanvas.addEventListener('touchend', ()=> signing=false);
+}
+
+function clearSignature() {
+  if(sigCtx) sigCtx.clearRect(0,0,sigCanvas.width,sigCanvas.height);
+}
+
+function isCanvasEmpty() {
+  if(!sigCanvas) return true;
+  const data = sigCtx.getImageData(0,0,sigCanvas.width,sigCanvas.height).data;
+  return !data.some(v => v !== 0);
+}
+
+function submitSignature() {
+  if(isCanvasEmpty()) {
+    alert('Veuillez apposer votre signature avant de valider.');
+    return;
+  }
+  STATE.signed = true;
+  closeDevisModal();
+  openCalendarModal();
+  addMsg('bot', `🎉 Devis signé avec succès !<br>Choisissez maintenant la <strong>date de votre chantier</strong> pour que nous la réservions dans notre agenda.`);
+}
+
+// ============================================================
+// DOWNLOAD DEVIS (print to PDF)
+// ============================================================
+function downloadDevis() {
+  const body = document.getElementById('devis-modal-body').innerHTML;
+  const win = window.open('','_blank');
+  win.document.write(`
+    <!DOCTYPE html><html><head>
+    <meta charset="UTF-8">
+    <title>Devis ${STATE.devisNum}</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+      body{font-family:'DM Sans',sans-serif;padding:2rem;color:#1a1a1a;max-width:750px;margin:0 auto}
+      .devis-logo-row{display:flex;justify-content:space-between;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #eee}
+      .devis-company-name{font-size:1.5rem;font-weight:700}
+      .devis-company-name span{color:#C0392B}
+      .devis-company-info,.devis-num .date,.t-location{font-size:.8rem;color:#666;line-height:1.6}
+      .devis-num{text-align:right}
+      .devis-num .label{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:#999}
+      .devis-num .value{font-size:1.1rem;font-weight:700}
+      .devis-client-box{background:#f8f8f8;padding:1rem;border-left:3px solid #C0392B;margin-bottom:1.5rem}
+      .devis-client-box .label{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:.3rem}
+      .devis-client-box .name{font-weight:600}
+      .devis-client-box .info{font-size:.85rem;color:#666}
+      .devis-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem}
+      .devis-table th{background:#1a1a1a;color:white;padding:.6rem 1rem;text-align:left;font-size:.75rem;letter-spacing:1px;text-transform:uppercase}
+      .devis-table td{padding:.7rem 1rem;border-bottom:1px solid #eee;font-size:.88rem}
+      .devis-table .price{text-align:right;font-weight:600}
+      .devis-totals{margin-left:auto;width:260px}
+      .devis-total-row{display:flex;justify-content:space-between;padding:.35rem 0;font-size:.88rem;color:#666}
+      .devis-total-row.grand{border-top:2px solid #1a1a1a;margin-top:.4rem;padding-top:.6rem;font-weight:700;font-size:1rem;color:#1a1a1a}
+      .devis-footer-note{margin-top:1.5rem;padding:.8rem;background:#fff8f7;border:1px solid rgba(192,57,43,.2);font-size:.78rem;color:#666;line-height:1.6}
+      .sign-section{margin-top:2rem;border-top:1px dashed #ccc;padding-top:1.5rem}
+      .sign-label{font-size:.75rem;letter-spacing:1px;text-transform:uppercase;color:#999;margin-bottom:.5rem}
+      canvas{display:block;border:1px solid #ddd;width:100%;max-width:400px}
+      @media print{body{padding:0}}
+    </style></head><body>
+    ${body.replace(/<div class="devis-sign-section">[\s\S]*<\/div>\s*$/, '')}
+    <div class="sign-section">
+      <div class="sign-label">Signature client :</div>
+      <img src="${sigCanvas.toDataURL()}" style="max-width:300px;border:1px solid #ddd;padding:8px">
+      <p style="font-size:.75rem;color:#666;margin-top:.5rem">Lu et approuvé — Bon pour accord</p>
+    </div>
+    <script>window.onload=()=>window.print()<\/script>
+    </body></html>
+  `);
+  win.document.close();
+}
+
+// ============================================================
+// CALENDAR MODAL
+// ============================================================
+function openCalendarModal() {
+  const dateDisplay = STATE.preferredDate || 'À confirmer';
+  const services = STATE.services.map(s=>TARIFS[s].label).join(', ');
+
+  // Build Google Calendar URL
+  const title = encodeURIComponent(`Chantier Khili Peinture – ${STATE.clientName}`);
+  const details = encodeURIComponent(
+    `Client : ${STATE.clientName}\nTél : ${STATE.clientPhone}\nEmail : ${STATE.clientEmail}\nAdresse : ${STATE.clientAddress}\nTravaux : ${services}\nSurface : ${STATE.surface} m²\nDevis : ${STATE.devisNum} – ${STATE.totalTTC.toFixed(2)} € TTC\n${STATE.details ? 'Notes : '+STATE.details : ''}`
+  );
+  const location = encodeURIComponent(STATE.clientAddress);
+  // Default start = next monday for demo
+  const d = new Date(); d.setDate(d.getDate() + 7);
+  const fmt = d => d.toISOString().replace(/-|:|\.\d{3}/g,'').slice(0,15)+'Z';
+  const start = fmt(d);
+  const dEnd = new Date(d.getTime() + 8*3600*1000);
+  const end = fmt(dEnd);
+  const calURL = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&location=${location}`;
+
+  document.getElementById('cal-body').innerHTML = `
+    <div class="cal-info-row">
+      <div class="cal-icon">👤</div>
+      <div><strong>${STATE.clientName}</strong><span>${STATE.clientPhone} — ${STATE.clientEmail}</span></div>
+    </div>
+    <div class="cal-info-row">
+      <div class="cal-icon">📍</div>
+      <div><strong>${STATE.clientAddress}</strong><span>Zone d'intervention Khili Peinture</span></div>
+    </div>
+    <div class="cal-info-row">
+      <div class="cal-icon">🖌️</div>
+      <div><strong>${services}</strong><span>${STATE.surface} m² — ${STATE.totalTTC.toFixed(2)} € TTC</span></div>
+    </div>
+    <div class="cal-info-row">
+      <div class="cal-icon">📅</div>
+      <div><strong>Date souhaitée : ${dateDisplay}</strong><span>Devis n° ${STATE.devisNum}</span></div>
+    </div>
+    <div class="cal-actions">
+      <a href="${calURL}" target="_blank" class="btn-cal" style="text-align:center;text-decoration:none" onclick="showCalSuccess()">
+        📅 Ajouter à Google Agenda (KHILI)
+      </a>
+    </div>
+    <p style="font-size:.75rem;color:var(--grey);margin-top:1rem;text-align:center">
+      Cliquez pour ouvrir Google Agenda et confirmer la réservation
+    </p>
+  `;
+  document.getElementById('cal-modal').classList.add('open');
+}
+
+function showCalSuccess() {
+  setTimeout(() => {
+    document.getElementById('cal-body').innerHTML = `
+      <div class="cal-success">
+        <div class="big-check">✅</div>
+        <h4>Chantier réservé !</h4>
+        <p>
+          La date a été ajoutée à l'agenda Google de <strong>Khili Peinture</strong>.<br>
+          Un email de confirmation va être envoyé à <strong>${STATE.clientEmail}</strong>.<br>
+          Khili vous contactera au <strong>${STATE.clientPhone}</strong> pour confirmer les détails.
+        </p>
+        <button class="btn-primary" style="margin-top:1.5rem;border:none;cursor:pointer" onclick="document.getElementById('cal-modal').classList.remove('open')">Fermer</button>
+      </div>
+    `;
+    addMsg('bot', `🎉 Parfait <strong>${STATE.clientName}</strong> !<br>Votre chantier est réservé dans l'agenda Khili Peinture.<br>On vous contactera au <strong>${STATE.clientPhone}</strong> pour confirmer les détails.<br>Merci de votre confiance ! 🙏`);
+  }, 500);
+}
+
+// ============================================================
+// CLAUDE API (open questions)
+// ============================================================
+async function callClaude(userMsg) {
+  STATE.history.push({ role:'user', content: userMsg });
+  addMsg('bot','', 200);
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:`Tu es l'assistant de Khili Peinture, artisan peintre à Draguignan (Var, 83) depuis 2011.
+Services : peinture intérieure (18€/m²), extérieure (22€/m²), béton ciré (65€/m²), stucco (55€/m²), papier peint (28€/m²), ravalement (35€/m²). TVA 10%.
+Réponds en français, de façon chaleureuse et professionnelle. Si le client veut un devis, guide-le vers l'assistant.`,
+        messages: STATE.history
+      })
+    });
+    const data = await resp.json();
+    const text = data.content?.[0]?.text || 'Je suis là pour vous aider !';
+    STATE.history.push({ role:'assistant', content: text });
+
+    // Replace typing with real message
+    const msgs = document.getElementById('chat-messages');
+    const typing = msgs.querySelector('.typing-indicator')?.parentElement;
+    if(typing) typing.remove();
+    addMsg('bot', text.replace(/\n/g,'<br>'));
+  } catch(e) {
+    addMsg('bot','Désolé, une erreur est survenue. Appelez-nous au 06 06 87 13 12.');
+  }
+}
+
+// ============================================================
+// SCROLL REVEAL
+// ============================================================
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold:.1, rootMargin:'0px 0px -30px 0px' });
+document.querySelectorAll('.fadein').forEach(el => obs.observe(el));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
