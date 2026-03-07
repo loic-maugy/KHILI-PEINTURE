@@ -343,7 +343,7 @@
   <div class="devis-box fadein">
     <div><div class="ci-label">T&#233;l&#233;phone</div><a href="tel:0606871312" class="ci-value">06 06 87 13 12</a></div>
     <div class="ci-divider"></div>
-    <div><div class="ci-label">Email</div><a href="mailto:khilipeinture@yahoo.fr" class="ci-value">khilipeinture&#64;yahoo.fr</a></div>
+    <div><div class="ci-label">Email</div><a href="/cdn-cgi/l/email-protection#43282b2a2f2a33262a2d37363126033a222b2c2c6d2531" class="ci-value">khilipeinture&#64;yahoo.fr</a></div>
     <div class="ci-divider"></div>
     <div><div class="ci-label">Disponibilit&#233;</div><div class="ci-value">Lun &#8211; Sam &middot; 8h &#8211; 19h</div></div>
     <div class="ci-divider"></div>
@@ -394,7 +394,7 @@
   <p>&#169; 2025 Khili Peinture &middot; Artisan depuis 2011 &middot; Draguignan, Var</p>
   <div class="footer-links">
     <a href="tel:0606871312">06 06 87 13 12</a>
-    <a href="mailto:khilipeinture@yahoo.fr">khilipeinture&#64;yahoo.fr</a>
+    <a href="/cdn-cgi/l/email-protection#d3b8bbbabfbaa3b6babda7a6a1b693aab2bbbcbcfdb5a1">khilipeinture&#64;yahoo.fr</a>
   </div>
 </footer>
 
@@ -444,7 +444,7 @@
     <div class="cal-body" id="cal-body"></div>
   </div>
 </div>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ================================================================
 // STATE
 // ================================================================
@@ -944,7 +944,7 @@ function callClaude(userMsg) {
 
   fetch('https://api.anthropic.com/v1/messages', {
     method:'POST',
-    headers:{ 'Content-Type':'application/json' },
+    headers:{ 'Content-Type':'application/json', 'anthropic-dangerous-direct-browser-access': 'true' },
     body: JSON.stringify({
       model:'claude-sonnet-4-20250514',
       max_tokens:500,
@@ -987,13 +987,178 @@ function callClaude(userMsg) {
   })
   .catch(function() {
     typingEl.remove();
-    addMsg('bot', 'Petite interruption technique ! &#128514;<br>Dites-moi ce que vous souhaitez :');
-    setOptions([
-      { label: '&#128203; Demarrer un devis', action: function(){ clearOptions(); STATE.step='ask_name'; addMsg('bot','Bien ! Quel est votre <strong>nom complet</strong> ?'); } },
-      { label: '&#128172; Poser une question', action: function(){ clearOptions(); addMsg('bot','Quelle est votre question ?'); } },
-      { label: '&#128260; Reessayer', action: function(){ clearOptions(); STATE.history.pop(); callClaude(userMsg); } }
-    ]);
+    // Fallback intelligent local — analyse le message et répond sans API
+    localFallback(userMsg);
   });
+}
+
+// ================================================================
+// FALLBACK LOCAL INTELLIGENT (si API indisponible)
+// ================================================================
+function localFallback(msg) {
+  var lower = msg.toLowerCase();
+  var response = '';
+  var opts = [];
+
+  // Détection maison / appartement complet
+  if (lower.match(/maison|appartement|logement|toutes? (les )?pi.ces|int.rieur complet/)) {
+    response = '&#127968; Super projet ! Pour une <strong>maison complète</strong>, j'ai besoin de quelques infos pour vous estimer le prix.<br><br>';
+    response += 'En général, on compte :<br>&#9658; Peinture intérieure : <strong>18€/m²</strong><br>&#9658; Pour 100m² de surface à peindre : environ <strong>1 980€ TTC</strong><br><br>';
+    response += 'Quelle est approximativement la <strong>surface totale à peindre</strong> (murs + plafonds) ?';
+    opts = [
+      { label: 'Moins de 100m²',  action: function(){ clearOptions(); addMsg('user','Moins de 100m²'); simulateCalc(80,'peinture interieure'); }},
+      { label: '100 à 200m²',     action: function(){ clearOptions(); addMsg('user','100 à 200m²'); simulateCalc(150,'peinture interieure'); }},
+      { label: 'Plus de 200m²',   action: function(){ clearOptions(); addMsg('user','Plus de 200m²'); simulateCalc(220,'peinture interieure'); }},
+      { label: '&#128203; Faire mon devis complet', action: function(){ clearOptions(); STATE.step='ask_name'; addMsg('bot','Parfait ! Pour votre devis, quel est votre <strong>prénom et nom</strong> ?'); }}
+    ];
+  }
+  // Détection façade / extérieur
+  else if (lower.match(/fa.ade|ext.rieur|volet|ravalement/)) {
+    response = '&#127968; Pour un <strong>ravalement de façade</strong> ou peinture extérieure :<br><br>';
+    response += '&#9658; Ravalement complet : <strong>35€/m²</strong><br>&#9658; Peinture extérieure : <strong>22€/m²</strong><br><br>';
+    response += 'Pour une maison de 100m² de façade : environ <strong>3 850€ TTC</strong> (ravalement).<br><br>Quelle est la surface de votre façade approximativement ?';
+    opts = [
+      { label: 'Moins de 80m²',  action: function(){ clearOptions(); addMsg('user','Moins de 80m²'); simulateCalc(70,'ravalement'); }},
+      { label: '80 à 150m²',     action: function(){ clearOptions(); addMsg('user','80 à 150m²'); simulateCalc(120,'ravalement'); }},
+      { label: 'Plus de 150m²',  action: function(){ clearOptions(); addMsg('user','Plus de 150m²'); simulateCalc(180,'ravalement'); }},
+      { label: '&#128203; Devis précis', action: function(){ clearOptions(); STATE.step='ask_name'; addMsg('bot','Quel est votre <strong>prénom et nom</strong> pour votre devis ?'); }}
+    ];
+  }
+  // Détection béton ciré
+  else if (lower.match(/b.ton cir.|beton|sol|carrelage|moderne/)) {
+    response = '&#10024; Le <strong>béton ciré</strong> est une excellente option !<br><br>';
+    response += '&#9658; Tarif : <strong>65€/m²</strong><br>&#9658; Pour 30m² de sol : <strong>2 145€ TTC</strong><br><br>';
+    response += 'C'est idéal pour sols et murs, effet lisse et moderne, très résistant et facile d'entretien.<br><br>Sur quelle surface souhaitez-vous du béton ciré ?';
+    opts = [
+      { label: 'Moins de 20m²',  action: function(){ clearOptions(); simulateCalc(15,'beton cire'); }},
+      { label: '20 à 50m²',      action: function(){ clearOptions(); simulateCalc(35,'beton cire'); }},
+      { label: 'Plus de 50m²',   action: function(){ clearOptions(); simulateCalc(60,'beton cire'); }},
+      { label: '&#128203; Devis complet', action: function(){ clearOptions(); STATE.step='ask_name'; addMsg('bot','Pour votre devis béton ciré, quel est votre <strong>nom complet</strong> ?'); }}
+    ];
+  }
+  // Détection stucco
+  else if (lower.match(/stucco|marbre|relief|d.corat/)) {
+    response = '&#127775; Le <strong>stucco décoratif</strong> apporte un effet haut de gamme !<br><br>';
+    response += '&#9658; Tarif : <strong>55€/m²</strong><br>&#9658; Pour 25m² de murs : <strong>1 512€ TTC</strong><br><br>';
+    response += 'Effet marbre, pierre ou relief selon votre goût. Quelle pièce souhaitez-vous décorer ?';
+    opts = [
+      { label: 'Salon / séjour', action: function(){ clearOptions(); simulateCalc(40,'stucco'); }},
+      { label: 'Chambre',        action: function(){ clearOptions(); simulateCalc(25,'stucco'); }},
+      { label: 'Couloir',        action: function(){ clearOptions(); simulateCalc(20,'stucco'); }},
+      { label: '&#128203; Devis personnalisé', action: function(){ clearOptions(); STATE.step='ask_name'; addMsg('bot','Pour votre devis stucco, quel est votre <strong>nom complet</strong> ?'); }}
+    ];
+  }
+  // Détection papier peint
+  else if (lower.match(/papier peint|tapisserie|panoramique|vinyle/)) {
+    response = '&#128196; Très bon choix ! La <strong>pose de papier peint</strong> transforme une pièce rapidement.<br><br>';
+    response += '&#9658; Tarif : <strong>28€/m²</strong> (fourniture non incluse)<br>&#9658; Pour une chambre de 20m² : environ <strong>616€ TTC</strong><br><br>';
+    response += 'Quel type de papier peint vous intéresse ?';
+    opts = [
+      { label: 'Classique uni',    action: function(){ clearOptions(); simulateCalc(20,'papier peint'); }},
+      { label: 'Panoramique',      action: function(){ clearOptions(); simulateCalc(30,'papier peint'); }},
+      { label: 'Plusieurs pièces', action: function(){ clearOptions(); simulateCalc(60,'papier peint'); }},
+      { label: '&#128203; Devis précis', action: function(){ clearOptions(); STATE.step='ask_name'; addMsg('bot','Quel est votre <strong>nom complet</strong> pour le devis ?'); }}
+    ];
+  }
+  // Prix / tarif / combien
+  else if (lower.match(/prix|tarif|co.te|combien|budget/)) {
+    response = '&#128176; Voici nos <strong>tarifs HT</strong> (TVA 10% en sus) :<br><br>';
+    response += '&#9658; Peinture intérieure : <strong>18€/m²</strong><br>';
+    response += '&#9658; Peinture extérieure : <strong>22€/m²</strong><br>';
+    response += '&#9658; Béton ciré : <strong>65€/m²</strong><br>';
+    response += '&#9658; Stucco décoratif : <strong>55€/m²</strong><br>';
+    response += '&#9658; Papier peint : <strong>28€/m²</strong><br>';
+    response += '&#9658; Ravalement façade : <strong>35€/m²</strong><br><br>';
+    response += 'Forfait déplacement : 60€ HT. Devis 100% gratuit !<br>Pour quel type de travaux souhaitez-vous une estimation ?';
+    opts = [
+      { label: '&#128203; Faire mon devis', action: function(){ clearOptions(); STATE.step='ask_name'; addMsg('bot','Quel est votre <strong>prénom et nom</strong> ?'); }},
+      { label: '&#128176; Estimation rapide', action: function(){ clearOptions(); addMsg('bot','Quel type de travaux et quelle surface (m²) ? Je calcule immédiatement !'); STATE.step='free'; }}
+    ];
+  }
+  // Délai / quand / disponibilité
+  else if (lower.match(/d.lai|quand|disponible|rapidement|urgent/)) {
+    response = '&#128197; Nos <strong>délais habituels</strong> :<br><br>';
+    response += '&#9658; Petite pièce (20m²) : <strong>1 journée</strong><br>';
+    response += '&#9658; Appartement 3 pièces : <strong>3-4 jours</strong><br>';
+    response += '&#9658; Maison complète : <strong>7-10 jours</strong><br>';
+    response += '&#9658; Façade : <strong>3-5 jours</strong><br>';
+    response += '&#9658; Béton ciré : <strong>2-3 jours</strong> (séchage inclus)<br><br>';
+    response += 'Planning moyen : intervention possible sous <strong>2-3 semaines</strong>. Urgences étudiées selon le planning.';
+    opts = [
+      { label: '&#128203; Réserver maintenant', action: function(){ clearOptions(); STATE.step='ask_name'; addMsg('bot','Pour réserver, commençons par votre <strong>prénom et nom</strong> :'); }},
+      { label: '&#128176; Voir les tarifs', action: function(){ clearOptions(); localFallback('prix tarif'); }}
+    ];
+  }
+  // Problème humidité / moisissures
+  else if (lower.match(/humidit.|moisissure|d.collement|fissure|.caille/)) {
+    response = '&#128293; Je comprends ! Voici les <strong>solutions adaptées</strong> :<br><br>';
+    if (lower.match(/humidit.|moisissure/)) {
+      response += '&#9658; <strong>Humidité / moisissures</strong> : traitement fongicide + peinture anti-humidité microporeuse. Prix : 20-25€/m² selon état.<br><br>';
+    }
+    if (lower.match(/fissure/)) {
+      response += '&#9658; <strong>Fissures</strong> : enduit élastique armé + primaire + peinture. Prix inclus dans notre intervention.<br><br>';
+    }
+    if (lower.match(/d.collement|.caille/)) {
+      response += '&#9658; <strong>Peinture qui s'écaille</strong> : décapage complet + primaire d'accrochage avant repeinture. Obligatoire pour un résultat durable.<br><br>';
+    }
+    response += 'Je vous recommande un <strong>devis avec visite</strong> pour évaluer précisément l'état des surfaces.';
+    opts = [
+      { label: '&#128203; Devis + visite', action: function(){ clearOptions(); STATE.step='ask_name'; addMsg('bot','Pour organiser une visite, quel est votre <strong>prénom et nom</strong> ?'); }},
+      { label: '&#128172; Autre question', action: function(){ clearOptions(); addMsg('bot','Quelle autre question puis-je vous répondre ?'); STATE.step='free'; }}
+    ];
+  }
+  // Conseil couleur / déco
+  else if (lower.match(/couleur|d.co|tendance|ambiance|salon|chambre/)) {
+    response = '&#127912; Quelques <strong>conseils déco tendance 2025</strong> :<br><br>';
+    response += '&#9658; <strong>Salon</strong> : tons terreux (terra cotta, ocre, beige chaud) ou vert sauge<br>';
+    response += '&#9658; <strong>Chambre</strong> : bleu grisé, vert eucalyptus, taupe doux pour la détente<br>';
+    response += '&#9658; <strong>Cuisine</strong> : blanc cassé + une couleur franche sur un mur accent<br>';
+    response += '&#9658; <strong>Petit espace</strong> : couleurs claires et mates pour agrandir visuellement<br><br>';
+    response += 'Nous pouvons vous conseiller sur le choix final lors du devis. Quelle pièce souhaitez-vous rénover ?';
+    opts = [
+      { label: '&#128203; Faire un devis', action: function(){ clearOptions(); STATE.step='ask_name'; addMsg('bot','Quel est votre <strong>prénom et nom</strong> ?'); }},
+      { label: '&#128172; Autre question', action: function(){ clearOptions(); addMsg('bot','Posez votre question !'); STATE.step='free'; }}
+    ];
+  }
+  // Réponse générique intelligente
+  else {
+    response = '&#128075; Merci pour votre message ! Je suis l'assistant de <strong>Khili Peinture</strong>.<br><br>';
+    response += 'Je peux vous aider avec :';
+    opts = [
+      { label: '&#128203; Faire un devis', action: function(){ clearOptions(); STATE.step='ask_name'; addMsg('bot','Parfait ! Quel est votre <strong>prénom et nom</strong> ?'); }},
+      { label: '&#128176; Voir les tarifs', action: function(){ clearOptions(); localFallback('prix tarif combien'); }},
+      { label: '&#127912; Conseils déco', action: function(){ clearOptions(); localFallback('couleur tendance salon'); }},
+      { label: '&#128197; Délais', action: function(){ clearOptions(); localFallback('delai quand disponible'); }}
+    ];
+  }
+
+  addMsg('bot', response);
+  if (opts.length) setTimeout(function(){ setOptions(opts); }, 900);
+}
+
+// Simulation de calcul rapide sans flow complet
+function simulateCalc(surface, service) {
+  STATE.surface = surface;
+  if (STATE.services.indexOf(service) < 0) STATE.services.push(service);
+  var t = TARIFS[service];
+  var ht = surface * t.prix + 60;
+  var ttc = ht * 1.10;
+  addMsg('bot',
+    '&#128202; <strong>Estimation rapide</strong><br><br>' +
+    t.label + ' — ' + surface + ' m²<br>' +
+    '&#9658; ' + surface + ' × ' + t.prix + '€ = ' + (surface*t.prix).toFixed(0) + '€ HT<br>' +
+    '&#9658; Déplacement : 60€<br>' +
+    '&#9658; Total HT : ' + ht.toFixed(0) + '€<br>' +
+    '<strong>&#9658; Total TTC : ' + ttc.toFixed(0) + '€</strong><br><br>' +
+    'Cette estimation est indicative. Voulez-vous un <strong>devis officiel gratuit</strong> ?'
+  );
+  setTimeout(function(){
+    setOptions([
+      { label: '&#128203; Oui, faire mon devis', action: function(){ clearOptions(); STATE.step='ask_name'; addMsg('bot','Super ! Quel est votre <strong>prénom et nom</strong> ?'); }},
+      { label: '&#9999; Modifier la surface', action: function(){ clearOptions(); STATE.services=[]; STATE.surface=0; addMsg('bot','Quelle surface souhaitez-vous peindre (en m²) ?'); STATE.step='ask_surface_only'; }},
+      { label: '&#128172; Autre question', action: function(){ clearOptions(); addMsg('bot','Posez votre question !'); STATE.step='free'; }}
+    ]);
+  }, 1000);
 }
 
 // ================================================================
